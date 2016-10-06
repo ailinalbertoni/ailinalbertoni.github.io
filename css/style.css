@@ -472,6 +472,18 @@ a:hover {
 	list-style: none;
 }
 
+.resume-info ul li ul  {
+	margin-top: -10px;
+}
+
+.resume-info ul li ul li {
+    border: 0px;
+    color: #828282;
+    padding: 5px 0px 0px 0px;
+    margin: 10px 50px;
+    list-style-type: square;
+}
+
 .resume-info p {
 	margin: 0px;
 	color: #828282;
