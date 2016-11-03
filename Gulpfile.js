@@ -9,7 +9,7 @@ var del = require('del');
 var vinylPaths = require('vinyl-paths');
 var useref = require('gulp-useref');
 var filter = require('gulp-filter');
-//var gulpif = require('gulp-if');
+var replace = require('gulp-replace-path');
 
 var filesJS = [
    "./js/jquery.min.js",
@@ -88,9 +88,10 @@ gulp.task('html', ['styles', 'scripts'], function () {
         .pipe(cssFilter)
         .pipe(cleanCSS())
         .pipe(cssFilter.restore)
-       // .pipe(useref.restore())
         .pipe(useref())
-        .pipe(gulp.dest('./dist'))
+        .pipe(replace('href="fonts/', 'href="dist/fonts/'))
+        .pipe(replace('src="images/', 'src="dist/images/'))
+        .pipe(gulp.dest(''))
         .pipe(size());
 });
 
@@ -103,8 +104,8 @@ gulp.task('images', function () {
 
 // Clean
 gulp.task('clean', function () {
-    return gulp.src("./dist/*", { read: false })
-         .pipe(vinylPaths(del));
+    // return gulp.src("./dist/*", { read: false })
+    //      .pipe(vinylPaths(del));
 });
 
 // Build
