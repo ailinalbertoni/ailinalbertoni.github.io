@@ -90,6 +90,7 @@ gulp.task('html', ['styles', 'scripts'], function () {
         .pipe(cssFilter.restore)
         .pipe(useref())
         .pipe(replace('href="fonts/', 'href="dist/fonts/'))
+        .pipe(replace('href="images/', 'href="dist/images/'))
         .pipe(replace('src="images/', 'src="dist/images/'))
         .pipe(gulp.dest(''))
         .pipe(size());
