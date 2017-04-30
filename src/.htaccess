@@ -37,6 +37,10 @@ BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
   <filesmatch "\.(js)$">
   Header set Cache-Control "max-age=2678400, private"
   </filesmatch>
+  # Cache Javascripts for 31 days
+  <filesmatch "analytics.js">
+  Header set Cache-Control "max-age=2678400, public"
+  </filesmatch>
 </ifmodule>
 
 <ifModule mod_gzip.c>
