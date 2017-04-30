@@ -7,6 +7,7 @@ var del = require('del');
 var useref = require('gulp-useref');
 var replace = require('gulp-replace-path');
 var gulpif = require('gulp-if');
+var imagemin = require('gulp-imagemin');
 
 // Clean
 gulp.task('clean', function () {
@@ -25,10 +26,16 @@ gulp.task('fonts', function() {
 
 // Images
 gulp.task('images', function () {
-    return gulp.src('src/images/*')
+    return gulp.src('src/images/**/*.+(png|jpg|jpeg|gif|svg)')
+        .pipe(imagemin({}))
         .pipe(gulp.dest('dist/images'))
         .pipe(size());
 });
+// gulp.task('images', function () {
+//     return gulp.src('src/images/*')
+//         .pipe(gulp.dest('dist/images'))
+//         .pipe(size());
+// });
 
 // HTML
 gulp.task('html', function () {

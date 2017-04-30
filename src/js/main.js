@@ -75,7 +75,7 @@ jQuery(document).ready(function($) {
 	    ga('send', {
 	      'hitType': 'event',
 	      'eventCategory': 'Outbound Social',
-	      'eventAction': 'Click Link',
+	      'eventAction': 'Click',
 	      'eventLabel': $(this).attr("gaEventLabel")
 	    });
 	});
