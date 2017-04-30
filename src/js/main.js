@@ -68,26 +68,16 @@ jQuery(document).ready(function($) {
 //GA Track Outbound Links
 jQuery(document).ready(function($) {
 	"use strict";
+
 	$('.social li > a').click(function(e) {
 		if (typeof ga !== "function") return;
 
-		e.preventDefault();
-	    var href = $(this).attr("href");
 	    ga('send', {
 	      'hitType': 'event',
 	      'eventCategory': 'Outbound Social',
 	      'eventAction': 'Click Link',
-	      'eventLabel': $(this).attr("gaEventLabel"),
-	      'hitCallback': loadPage
+	      'eventLabel': $(this).attr("gaEventLabel")
 	    });
-
-	    // redirect after one second if recording takes too long
-	    setTimeout(loadPage, 1000);
-
-	    // redirect to outbound page
-	    function loadPage() {
-	      window.open(href,'_blank');
-	    }
 	});
 });
 
