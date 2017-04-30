@@ -68,7 +68,6 @@ jQuery(document).ready(function($) {
 //GA Track Outbound Links
 jQuery(document).ready(function($) {
 	"use strict";
-
 	$('.social li > a').click(function(e) {
 		if (typeof ga !== "function") return;
 
