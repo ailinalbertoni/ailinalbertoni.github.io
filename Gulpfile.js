@@ -8,6 +8,7 @@ var useref = require('gulp-useref');
 var replace = require('gulp-replace-path');
 var gulpif = require('gulp-if');
 var imagemin = require('gulp-imagemin');
+var htmlmin = require('gulp-htmlmin');
 
 // Clean
 gulp.task('clean', function () {
@@ -18,6 +19,7 @@ gulp.task('clean', function () {
 gulp.task('fonts', function() {
    gulp.src('src/fonts.list')
         .pipe(googleWebFonts({}))
+        .pipe(gulpif('*.css', cleanCSS()))
         .pipe(gulp.dest('dist/fonts'));
 
    return gulp.src(['src/font-awesome/fonts/fontawesome-webfont*'])
@@ -26,7 +28,7 @@ gulp.task('fonts', function() {
 
 // Images
 gulp.task('images', function () {
-    return gulp.src('src/images/**/*.+(png|jpg|jpeg|gif|svg)')
+    return gulp.src('src/images/**/*')
         .pipe(imagemin({}))
         .pipe(gulp.dest('dist/images'))
         .pipe(size());
@@ -38,6 +40,7 @@ gulp.task('html', function () {
         .pipe(useref())
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', cleanCSS()))
+        .pipe(gulpif('*.html', htmlmin({collapseWhitespace: true})))
         .pipe(gulp.dest('dist'))
         .pipe(size());
 });

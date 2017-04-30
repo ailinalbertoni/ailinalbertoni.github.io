@@ -975,7 +975,8 @@ footer p {
 .social li {
 	float: left;
 	list-style: none;
-	margin-left: 15px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
 
 .social li a {
@@ -1107,6 +1108,10 @@ footer p {
 /* Note: Design for a width of 768px */
 @media only screen and (min-width: 768px) and (max-width: 959px) {
 
+.main-content {
+	margin: 25px 0;
+}
+
 .container {
 	max-width: 760px;
 	width: 760px;
@@ -1125,6 +1130,10 @@ footer p {
 
 /* Note: Design for a width of 320px */
 @media only screen and (max-width: 767px) {
+
+.main-content {
+	margin: 25px 0;
+}
 
 .container {
 	max-width: 280px;
@@ -1165,11 +1174,13 @@ footer p {
 }
 
 .personal-info li em {
-	font-size: 13px;
+	font-size: 12px;
+	padding: 11px 9px;
 }
 
 .personal-info li span {
-	font-size: 13px;
+	font-size: 12px;
+	padding: 14px 9px;
 }
 
 #portfolio .item {
@@ -1223,6 +1234,10 @@ footer {
 
 /* Note: Design for a width of 480px */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
+
+.main-content {
+	margin: 25px 0;
+}
 
 .container {
 	max-width: 470px;
