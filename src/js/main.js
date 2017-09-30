@@ -1,13 +1,11 @@
-/* Loading Script */
-$(window).load(function() {
-	"use strict";
-	$(".loader").delay(100).fadeOut();
-    	$("#mask").delay(300).fadeOut("slow");
-    });
-
-/* Flexslider */
 $(window).load(function() {
   "use strict";
+	
+	/* Loading Script */
+	$(".loader").delay(100).fadeOut();
+	$("#mask").delay(300).fadeOut("slow");
+
+	/* Flexslider */
 	$('.flexslider').flexslider({
 		animation: "fade",
 		start: function(slider) {
@@ -21,12 +19,8 @@ $(window).load(function() {
 			});
 		}
 	});
-});
 
-//GA Track Menu Click Events
-jQuery(document).ready(function($) {
-	"use strict";
-
+	/* GA Track Menu Click Events */
 	$('.navigation li > a').click(function() {
 		if (typeof ga !== "function") return;
 		ga('send', {
@@ -36,12 +30,8 @@ jQuery(document).ready(function($) {
 		  eventLabel: $(this).attr("gaEventLabel")
 		});
 	});
-});
 
-//GA Track Outbound Links
-jQuery(document).ready(function($) {
-	"use strict";
-
+	/* GA Track Outbound Links */
 	$('.social li > a').click(function(e) {
 		if (typeof ga !== "function") return;
 
@@ -52,4 +42,5 @@ jQuery(document).ready(function($) {
 	      'eventLabel': $(this).attr("gaEventLabel")
 	    });
 	});
+	
 });
