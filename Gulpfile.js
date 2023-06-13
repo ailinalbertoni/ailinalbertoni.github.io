@@ -1,51 +1,66 @@
-var gulp = require('gulp');
-var uglify = require('gulp-uglify');
-var cleanCSS = require('gulp-clean-css');
-var googleWebFonts = require('gulp-google-webfonts');
-var size = require('gulp-size');
-var del = require('del');
-var useref = require('gulp-useref');
-var replace = require('gulp-replace-path');
-var gulpif = require('gulp-if');
-var imagemin = require('gulp-imagemin');
-var htmlmin = require('gulp-htmlmin');
+const gulp = require('gulp');
+const uglify = require('gulp-uglify');
+const cleanCSS = require('gulp-clean-css');
+const googleFonts = require('google-fonts');
+const googleWebFonts = require('gulp-google-webfonts');
+const size = require('gulp-size');
+const del = require('del');
+const useref = require('gulp-useref');
+const replace = require('gulp-replace-path');
+const gulpif = require('gulp-if');
+const imagemin = require('gulp-imagemin');
+const htmlmin = require('gulp-htmlmin');
+const merge = require('merge-stream');
+const fs = require('fs');
+const { parseFontString } = require('google-fonts');
 
-// Clean
+// Rest of your Gulp tasks...
+
+
 gulp.task('clean', function () {
-   return del.sync(['dist', 'index.html']);
+    return del(['dist', 'index.html']);
 });
 
-// Fonts
-gulp.task('fonts', function() {
-   gulp.src('src/fonts.list')
-        .pipe(googleWebFonts({}))
-        .pipe(gulpif('*.css', cleanCSS()))
-        .pipe(gulp.dest('dist/fonts'));
+// gulp.task('fonts', function () {
+//     const fontAwesomeFonts = gulp.src('src/font-awesome/fonts/fontawesome-webfont*')
+//         .pipe(gulp.dest('dist/fonts/'));
 
-   return gulp.src(['src/font-awesome/fonts/fontawesome-webfont*'])
-         .pipe(gulp.dest('dist/fonts/'));
+//     const fontsList = [
+//         { family: 'Open+Sans', variants: ['400', '300', '400italic', '600', '700', '800', '700italic', '600italic'] },
+//         { family: 'Neuton', variants: ['200', '300', '400'] },
+//         // Add more font configurations here
+//     ];
+
+//     const googleFontsStream = googleWebFonts({ fonts: fontsList });
+
+//     return merge(googleFontsStream, fontAwesomeFonts)
+//         .pipe(gulpif('*.css', cleanCSS()))
+//         .pipe(gulp.dest('dist/fonts'));
+// });
+
+gulp.task('fonts', function () {
+    return gulp.src('src/font-awesome/fonts/fontawesome-webfont*')
+        .pipe(gulp.dest('dist/fonts/'));
 });
 
-// Images
+
 gulp.task('images', function () {
     return gulp.src('src/images/**/*')
-        .pipe(imagemin({}))
+        .pipe(imagemin())
         .pipe(gulp.dest('dist/images'))
         .pipe(size());
 });
 
-// HTML
 gulp.task('html', function () {
     return gulp.src('./src/index.html')
         .pipe(useref())
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.css', cleanCSS()))
-        .pipe(gulpif('*.html', htmlmin({collapseWhitespace: true})))
+        .pipe(gulpif('*.html', htmlmin({ collapseWhitespace: true })))
         .pipe(gulp.dest('dist'))
         .pipe(size());
 });
 
-// Github Index
 gulp.task('github', function () {
     return gulp.src('dist/index.html')
         .pipe(replace('href="', 'href="dist/'))
@@ -54,20 +69,12 @@ gulp.task('github', function () {
         .pipe(size());
 });
 
-// Build
-gulp.task('build', ['html', 'images',  'fonts']);
+gulp.task('build', gulp.series('clean', 'fonts', gulp.parallel('html', 'images')));
 
-// Default task
-gulp.task('default', ['clean'],function() {
-    return gulp.start('build');
-});
+gulp.task('default', gulp.series('clean', 'build'));
 
-// Watch
-gulp.task('watch', ['clean'],function() {
-    gulp.start('build');
-
-    gulp.watch(["src/js/*.js","src/css/*.css","src/*.html"], ['html']);
-    gulp.watch(["src/images/*"], ['images']);
-    gulp.watch(["src/fonts.list","src/font-awesome/*"], ['fonts']);
-
-});
+gulp.task('watch', gulp.series('clean', 'build', function () {
+    gulp.watch(["src/js/*.js", "src/css/*.css", "src/*.html"], gulp.series('html'));
+    gulp.watch(["src/images/*"], gulp.series('images'));
+    gulp.watch(["src/fonts.list", "src/font-awesome/*"], gulp.series('fonts'));
+}));
