@@ -302,6 +302,11 @@ a:hover {
 	font-style: normal;
 }
 
+.personal-info li em.bold {
+	font-weight: bold;
+	line-height: 40px;
+}
+
 .personal-info li span {
 	padding: 11px 15px;
 	line-height: 42px;

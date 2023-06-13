@@ -65,11 +65,11 @@ gulp.task('github', function () {
     return gulp.src('dist/index.html')
         .pipe(replace('href="', 'href="dist/'))
         .pipe(replace('src="', 'src="dist/'))
-        .pipe(gulp.dest(''))
+        .pipe(gulp.dest('./'))
         .pipe(size());
 });
 
-gulp.task('build', gulp.series('clean', 'fonts', gulp.parallel('html', 'images')));
+gulp.task('build', gulp.series('clean', gulp.parallel('html', 'images', 'fonts'),'github'));
 
 gulp.task('default', gulp.series('clean', 'build'));
 
